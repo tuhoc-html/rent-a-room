@@ -6,7 +6,6 @@ export const MainLayout = () => {
     return <>
     <div>
         <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-
         <HeaderCom />
         </div>
         <main className="h-[4000px]">

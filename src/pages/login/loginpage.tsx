@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Home, X } from 'lucide-react';
 
+
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();

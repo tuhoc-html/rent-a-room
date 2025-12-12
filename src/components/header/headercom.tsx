@@ -6,15 +6,15 @@ import { useLocation } from 'react-router-dom';
 const HeaderCom = () => {
   const location = useLocation();
   return (
-    <header className="h-20 bg-white sticky top-0 z-50 border-b border-gray-100">
+    <header className="h-20 bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="container mx-auto px-4 h-full flex items-center justify-between">
         
         {/* LOGO */}
-        <Link to="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-blue-200">
+        <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all">
             T
           </div>
-          <span className="text-2xl font-bold text-gray-800 tracking-tight">TLU hostel</span>
+          <span className="text-2xl font-black text-gray-900 tracking-tight bg-gradient-to-r from-blue-600 to-cyan-500 text-transparent bg-clip-text">TLU hostel</span>
         </Link>
         
         {/* NAV LINKS (Căn giữa) */}
@@ -32,10 +32,10 @@ const HeaderCom = () => {
           </button>
 
           <div className="hidden sm:flex items-center gap-3">
-            <Link to="/login" state={{ background: location }} className="text-gray-600 font-bold text-[15px] hover:text-blue-600 px-2">
+            <Link to="/login" state={{ background: location }} className="text-gray-600 font-bold text-[15px] hover:text-blue-600 px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-300">
               Đăng nhập
             </Link>
-            <Link to="/register" state={{ background: location }} className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[15px] px-6 py-2.5 rounded-lg shadow-lg shadow-blue-500/20 transition">
+            <Link to="/register" state={{ background: location }} className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:shadow-lg hover:shadow-blue-500/30 text-white font-bold text-[15px] px-6 py-2.5 rounded-lg transition-all duration-300 active:scale-95">
               Đăng ký
             </Link>
           </div>

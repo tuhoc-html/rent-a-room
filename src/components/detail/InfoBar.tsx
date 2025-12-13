@@ -1,7 +1,6 @@
-// src/components/detail-v2/InfoBar.tsx
 import React from 'react';
 import { MessageCircle, Home, DollarSign, User, Clock, Phone as PhoneIcon, Phone } from 'lucide-react';
-import  type { RoomDetail } from '../../types';
+import type { RoomDetail } from '../../types';
 
 interface Props {
   data: RoomDetail;
@@ -28,7 +27,6 @@ const InfoBar: React.FC<Props> = ({ data }) => {
         </div>
       </div>
 
-      {/* Phần dưới: Meta Data Icons */}
       <div className="p-4 md:p-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-y-4 gap-x-2">
             <MetaItem icon={Home} label="Loại phòng" value="Tự quản" />
@@ -36,7 +34,6 @@ const InfoBar: React.FC<Props> = ({ data }) => {
             <MetaItem icon={User} label="Chủ trọ" value={data.owner.name} />
             <MetaItem icon={PhoneIcon} label="Điện thoại" value={data.owner.phone} />
             
-            {/* Dòng full width cho ngày đăng */}
             <div className="col-span-2 md:col-span-4 mt-2 pt-4 border-t border-gray-100 flex items-center gap-2 text-gray-500 text-sm">
                 <Clock size={16} />
                 <span>Ngày đăng: {data.createdAt}</span>
@@ -47,8 +44,14 @@ const InfoBar: React.FC<Props> = ({ data }) => {
   );
 };
 
-// Component con nhỏ để code gọn hơn
-const MetaItem = ({ icon: Icon, label, value }: any) => (
+
+interface MetaItemProps {
+  icon: React.ElementType; 
+  label: string;
+  value: string | number;
+}
+
+const MetaItem = ({ icon: Icon, label, value }: MetaItemProps) => (
     <div className="flex items-start gap-3">
         <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
             <Icon size={20} />

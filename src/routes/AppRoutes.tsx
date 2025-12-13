@@ -10,6 +10,8 @@ import RegisterPage from '../pages/register/registerpage';
 import ForgotPasswordPage from '../pages/forgot-password/forgotpasswordpage';
 import DetailPage from '../pages/detail/DetailPage'; 
 
+import AdminDashboard from '../pages/admin/AdminDashboard'; 
+
 const AppRoutes = () => {
   const location = useLocation();
   const state = location.state as { background?: Location };
@@ -31,9 +33,10 @@ const AppRoutes = () => {
            <Route path="/register" element={<RegisterPage />} />
            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Route>
-      </Routes>
 
-      {/* ... (Phần Modal giữ nguyên) ... */}
+        <Route path="/admin" element={<AdminDashboard />} />
+      </Routes>
+      
       {background && (
         <Routes>
           <Route element={<AuthenLayout isModal={true} />}>

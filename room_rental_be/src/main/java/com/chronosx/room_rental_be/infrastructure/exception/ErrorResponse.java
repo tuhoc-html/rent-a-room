@@ -10,8 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ErrorResponse {
-	private LocalDateTime timestamp;
-	private int code;
-	private String message;
-	private String path;
+    private LocalDateTime timestamp;
+    private int code;
+    private String message;
+    private String path;
 }

@@ -1,5 +1,6 @@
 package com.chronosx.room_rental_be.infrastructure.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +22,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+
+    private final UserDetailsServiceImpl userDetailsService;
+
+    private final String[] AUTH_WHITELIST = {
+            "/api/auth/**", "/h2-console/**", "/api/properties", "/api/properties/*",
+    };
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -47,7 +53,7 @@ public class SecurityConfig {
 
         http.cors(httpSecurityCorsConfigurer -> {
             CorsConfiguration corsConfiguration = new CorsConfiguration();
-            corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
+            corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
             corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             corsConfiguration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
             corsConfiguration.setExposedHeaders(List.of("x-auth-token"));

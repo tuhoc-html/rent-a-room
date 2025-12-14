@@ -2,7 +2,6 @@ package com.chronosx.room_rental_be.infrastructure.service.impl;
 
 import java.time.LocalDateTime;
 
-import com.chronosx.room_rental_be.domain.entity.enums.UserRole;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +15,7 @@ import com.chronosx.room_rental_be.application.dto.auth.RegisterRequest;
 import com.chronosx.room_rental_be.application.dto.auth.UserResponse;
 import com.chronosx.room_rental_be.application.service.AuthService;
 import com.chronosx.room_rental_be.domain.entity.User;
+import com.chronosx.room_rental_be.domain.entity.enums.UserRole;
 import com.chronosx.room_rental_be.domain.repository.UserRepository;
 import com.chronosx.room_rental_be.infrastructure.exception.BadRequestException;
 import com.chronosx.room_rental_be.infrastructure.exception.ResourceNotFoundException;

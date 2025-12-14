@@ -1,7 +1,5 @@
 package com.chronosx.room_rental_be.infrastructure.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.chronosx.room_rental_be.domain.entity.User;
 import com.chronosx.room_rental_be.domain.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

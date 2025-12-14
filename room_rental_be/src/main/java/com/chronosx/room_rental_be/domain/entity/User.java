@@ -2,8 +2,9 @@ package com.chronosx.room_rental_be.domain.entity;
 
 import java.time.LocalDateTime;
 
-import com.chronosx.room_rental_be.domain.entity.enums.UserRole;
 import jakarta.persistence.*;
+
+import com.chronosx.room_rental_be.domain.entity.enums.UserRole;
 
 import lombok.*;
 

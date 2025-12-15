@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.chronosx.room_rental_be.infrastructure.service.UserDetailsServiceImpl;
+import com.chronosx.room_rental_be.infrastructure.service.impl.UserDetailsServiceImpl;
 
 import io.jsonwebtoken.Claims;
 

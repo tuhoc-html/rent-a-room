@@ -1,4 +1,4 @@
-package com.chronosx.room_rental_be.infrastructure.service;
+package com.chronosx.room_rental_be.infrastructure.service.impl;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(u.getUsername())
                 .password(u.getPassword())
-                .authorities(u.getRole().name())
+                .authorities("ROLE_" + u.getRole().name())
                 .accountExpired(false)
                 .accountLocked(false)
                 .credentialsExpired(false)

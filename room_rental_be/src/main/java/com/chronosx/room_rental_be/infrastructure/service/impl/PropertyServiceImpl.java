@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import jakarta.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,7 @@ public class PropertyServiceImpl implements PropertyService {
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         // current user as owner
-        var auth = org.springframework.security.core.context.SecurityContextHolder.getContext()
+        var auth = SecurityContextHolder.getContext()
                 .getAuthentication();
         if (auth == null || !auth.isAuthenticated()) {
             throw new UnauthorizedException("Not authenticated");

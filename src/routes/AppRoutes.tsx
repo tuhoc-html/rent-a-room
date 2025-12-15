@@ -10,7 +10,15 @@ import RegisterPage from '../pages/register/registerpage';
 import ForgotPasswordPage from '../pages/forgot-password/forgotpasswordpage';
 import DetailPage from '../pages/detail/DetailPage'; 
 
-import AdminDashboard from '../pages/admin/AdminDashboard'; 
+import AdminLayout from '../components/layouts/AdminLayout';
+import DashboardPage from '../pages/admin/Dashboard';
+
+import PropertiesPage from '../pages/admin/management/PropertiesPage';
+import RoomsPage from '../pages/admin/management/RoomsPage';
+import ContractsPage from '../pages/admin/management/ContractsPage';
+import TenantsPage from '../pages/admin/management/TenantsPage';
+
+import AdminLoginPage from '../pages/admin/login/AdminLoginPage';
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -20,6 +28,8 @@ const AppRoutes = () => {
   return (
     <>
       <Routes location={background || location}>
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+
         <Route element={<Layout1 />}>
           <Route path="/" element={<HomePage />} />
           
@@ -34,7 +44,15 @@ const AppRoutes = () => {
            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Route>
 
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<DashboardPage />} />
+
+          <Route path="properties" element={<PropertiesPage />} />
+          <Route path="rooms" element={<RoomsPage />} />
+          <Route path="contracts" element={<ContractsPage />} />
+          <Route path="tenants" element={<TenantsPage />} />
+        </Route>
+
       </Routes>
       
       {background && (

@@ -33,15 +33,6 @@ spring:
             required: true
 
 jwt:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  signerKey: "0tpW3AuazUoAL61xcfp6jz9yUmMCKHBA04OY8Z1AwZegfu5D9q/X/C7x9JTV0GcT"
-  valid-duration: 50000
-  refreshable-duration: 40000
->>>>>>> nhanh-cua-kiet
-=======
->>>>>>> de54818bd43b7613d9d9b2c1c4b5fdf2c6373379
   secret: "0tpW3AuazUoAL61xcfp6jz9yUmMCKHBA04OY8Z1AwZegfu5D9q/X/C7x9JTV0GcT"
   expiration: 604800 #  1 day
 

@@ -7,14 +7,7 @@ import java.util.stream.Collectors;
 import jakarta.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import org.springframework.security.core.context.SecurityContextHolder;
-=======
->>>>>>> nhanh-cua-kiet
-=======
-import org.springframework.security.core.context.SecurityContextHolder;
->>>>>>> de54818bd43b7613d9d9b2c1c4b5fdf2c6373379
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,16 +42,7 @@ public class PropertyServiceImpl implements PropertyService {
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         // current user as owner
-<<<<<<< HEAD
-<<<<<<< HEAD
         var auth = SecurityContextHolder.getContext().getAuthentication();
-=======
-        var auth = org.springframework.security.core.context.SecurityContextHolder.getContext()
-=======
-        var auth = SecurityContextHolder.getContext()
->>>>>>> de54818bd43b7613d9d9b2c1c4b5fdf2c6373379
-                .getAuthentication();
->>>>>>> nhanh-cua-kiet
         if (auth == null || !auth.isAuthenticated()) {
             throw new UnauthorizedException("Not authenticated");
         }
@@ -153,7 +137,6 @@ public class PropertyServiceImpl implements PropertyService {
                 Predicate titleMatch = cb.like(cb.lower(root.get("title")), pattern);
                 Predicate descMatch = cb.like(cb.lower(root.get("description")), pattern);
                 Predicate addressMatch = cb.like(cb.lower(root.get("address")), pattern);
-
                 predicates.add(cb.or(titleMatch, descMatch, addressMatch));
             }
 

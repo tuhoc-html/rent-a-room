@@ -42,8 +42,7 @@ public class PropertyServiceImpl implements PropertyService {
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         // current user as owner
-        var auth = SecurityContextHolder.getContext()
-                .getAuthentication();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated()) {
             throw new UnauthorizedException("Not authenticated");
         }
@@ -154,7 +153,6 @@ public class PropertyServiceImpl implements PropertyService {
                 Predicate titleMatch = cb.like(cb.lower(root.get("title")), pattern);
                 Predicate descMatch = cb.like(cb.lower(root.get("description")), pattern);
                 Predicate addressMatch = cb.like(cb.lower(root.get("address")), pattern);
-
                 predicates.add(cb.or(titleMatch, descMatch, addressMatch));
             }
 

@@ -1,16 +1,26 @@
-import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
 
-import Layout1 from '../components/layouts/layout1';
-import AuthenLayout from '../components/layouts/authenlayout';
+import { Routes, Route, useLocation } from "react-router-dom";
 
-import HomePage from '../pages/home/homePage';
-import LoginPage from '../pages/login/loginpage';
-import RegisterPage from '../pages/register/registerpage';
-import ForgotPasswordPage from '../pages/forgot-password/forgotpasswordpage';
-import DetailPage from '../pages/detail/DetailPage'; 
+import Layout1 from "../components/layouts/layout1";
+import AuthenLayout from "../components/layouts/authenlayout";
 
-import AdminDashboard from '../pages/admin/AdminDashboard'; 
+import AdminLayout from '../components/layouts/AdminLayout';
+import DashboardPage from '../pages/admin/Dashboard';
+
+import PropertiesPage from '../pages/admin/management/PropertiesPage';
+import RoomsPage from '../pages/admin/management/RoomsPage';
+import ContractsPage from '../pages/admin/management/ContractsPage';
+import TenantsPage from '../pages/admin/management/TenantsPage';
+
+import AdminLoginPage from '../pages/admin/login/AdminLoginPage';
+import HomePage from "../pages/home/homePage";
+import { PrivateRoute } from "./PrivateRoute";
+import DetailPage from "../pages/detail/DetailPage";
+import LoginPage from "../pages/login/loginpage";
+import RegisterPage from "../pages/register/registerpage";
+import ForgotPasswordPage from "../pages/forgot-password/forgotpasswordpage";
+import { AuthProvider } from "../context/AuthContext";
+import { ToastProvider } from "../context/ToastContext";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -20,23 +30,50 @@ const AppRoutes = () => {
   return (
     <>
       <Routes location={background || location}>
-        <Route element={<Layout1 />}>
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+
+        <Route element={
+          <AuthProvider>
+            
+            <Layout1 />
+          </AuthProvider>
+          }>
           <Route path="/" element={<HomePage />} />
-          
+
           {/* THÊM ROUTE CHI TIẾT TẠI ĐÂY */}
-          <Route path="/listings/:id" element={<DetailPage />} />
-          
+
+          <Route
+            path="/listings/:id"
+            element={
+              <PrivateRoute>
+                <DetailPage />
+              </PrivateRoute>
+            }
+          />
         </Route>
 
         <Route element={<AuthenLayout />}>
-           <Route path="/login" element={<LoginPage />} />
-           <Route path="/register" element={<RegisterPage />} />
-           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Route>
 
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={
+          <ToastProvider>
+
+            <AdminLayout />
+          </ToastProvider>
+          }>
+          <Route index element={<DashboardPage />} />
+
+          <Route path="properties" element={<PropertiesPage />} />
+          <Route path="rooms" element={<RoomsPage />} />
+          <Route path="contracts" element={<ContractsPage />} />
+          <Route path="tenants" element={<TenantsPage />} />
+        </Route>
+
       </Routes>
-      
+
       {background && (
         <Routes>
           <Route element={<AuthenLayout isModal={true} />}>

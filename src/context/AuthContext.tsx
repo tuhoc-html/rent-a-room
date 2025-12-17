@@ -1,58 +1,94 @@
-import React, { createContext, useContext, useState, type ReactNode } from 'react';
-
-// Định nghĩa Interface User
-export interface User {
-  name: string;
-  id: string;
-  avatar: string;
-}
-
-// Định nghĩa kiểu cho Context
-interface AuthContextType {
-  user: User | null;
-  login: (userData: User) => void;
-  logout: () => void;
+import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
+import { Cookies } from "react-cookie";
+export type ProfileUser = {
+  avatar?: string;
+  userId: string;
+  username: string;
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  role?: string;
+};
+type AuthContextType = {
+  profile: ProfileUser | null;
   isAuthenticated: boolean;
-}
+  loading: boolean;
+  setProfile: (p: ProfileUser | null) => void;
+  logout: () => void;
+};
+const AuthContext = createContext<AuthContextType>({
+  profile: null,
+  isAuthenticated: false,
+  loading: true,
+  setProfile: () => {},
+  logout: () => {},
+});
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [profile, setProfile] = useState<ProfileUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  // --- KHẮC PHỤC LỖI 1: LAZY INITIALIZATION ---
-  // Đọc localStorage ngay khi khởi tạo state, không cần dùng useEffect nữa
-  const [user, setUser] = useState<User | null>(() => {
-    try {
-      const storedUser = localStorage.getItem('currentUser');
-      return storedUser ? JSON.parse(storedUser) : null;
-    } catch (error) {
-      console.error("Lỗi đọc localStorage:", error);
-      return null;
-    }
-  });
-
-  const login = (userData: User) => {
-    setUser(userData);
-    localStorage.setItem('currentUser', JSON.stringify(userData));
-  };
+  const cookies = new Cookies();
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('currentUser');
+    cookies.remove("token");
+    setProfile(null);
   };
 
+  const fetchProfile = async (token: string) => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8080/api/auth/me",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setProfile({
+        avatar: res.data.avatar,
+        userId: res.data.id,
+        username: res.data.username,
+        email: res.data.email,
+        fullName: res.data.fullName,
+        phone: res.data.phone,
+        role: res.data.role,
+      });
+    } catch (err) {
+      console.error("Verify token failed", err);
+      logout();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const token = cookies.get("token");
+
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+    fetchProfile(token);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider
+      value={{
+        profile,
+        isAuthenticated: !!profile,
+        loading,
+        setProfile,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-// Hook useAuth
-// eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
+export function useAuth() {
+  return useContext(AuthContext);
+}

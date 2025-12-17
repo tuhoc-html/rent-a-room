@@ -82,20 +82,36 @@ public class PropertyServiceImpl implements PropertyService {
         Property p =
                 propertyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Property not found"));
         // TODO: check ownership
-        p.setTitle(request.getTitle());
-        p.setDescription(request.getDescription());
-        p.setPrice(request.getPrice());
-        p.setArea(request.getArea());
-        p.setAddress(request.getAddress());
-        p.setAmenities(request.getAmenities());
-        var district = districtRepository
-                .findById(request.getDistrictId())
-                .orElseThrow(() -> new ResourceNotFoundException("District not found"));
-        var category = categoryRepository
-                .findById(request.getCategoryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
-        p.setDistrict(district);
-        p.setCategory(category);
+        if (request.getTitle() != null)
+            p.setTitle(request.getTitle());
+
+        if (request.getDescription() != null)
+            p.setDescription(request.getDescription());
+
+        if (request.getPrice() != null)
+            p.setPrice(request.getPrice());
+
+        if (request.getArea() != null)
+            p.setArea(request.getArea());
+
+        if (request.getAddress() != null)
+            p.setAddress(request.getAddress());
+
+        if (request.getAmenities() != null)
+            p.setAmenities(request.getAmenities());
+
+        if (request.getDistrictId() != null) {
+            var district = districtRepository.findById(request.getDistrictId())
+                    .orElseThrow(() -> new ResourceNotFoundException("District not found"));
+            p.setDistrict(district);
+        }
+
+        if (request.getCategoryId() != null) {
+            var category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+            p.setCategory(category);
+        }
+
         propertyRepository.save(p);
 
         // replace images if provided

@@ -7,7 +7,10 @@ import java.util.stream.Collectors;
 import jakarta.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
+<<<<<<< HEAD
 import org.springframework.security.core.context.SecurityContextHolder;
+=======
+>>>>>>> nhanh-cua-kiet
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +45,12 @@ public class PropertyServiceImpl implements PropertyService {
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         // current user as owner
+<<<<<<< HEAD
         var auth = SecurityContextHolder.getContext().getAuthentication();
+=======
+        var auth = org.springframework.security.core.context.SecurityContextHolder.getContext()
+                .getAuthentication();
+>>>>>>> nhanh-cua-kiet
         if (auth == null || !auth.isAuthenticated()) {
             throw new UnauthorizedException("Not authenticated");
         }

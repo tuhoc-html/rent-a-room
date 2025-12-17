@@ -6,25 +6,28 @@ const HeroSection = () => {
     <div className="relative">
       
       {/* --- BACKGROUND IMAGE & TEXT --- */}
-      <div className="relative h-[600px] w-full bg-slate-900 overflow-hidden">
-        {/* Ảnh nền */}
+      <div className="relative h-[650px] w-full bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden group">
+        {/* Ảnh nền với zoom effect */}
         <img 
           src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2070&auto=format&fit=crop" 
           alt="Luxury Room" 
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
+          className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 transition-opacity duration-700"
         />
         
-        {/* Nội dung chính giữa */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pb-20">
-          <span className="bg-[#22C55E] text-white px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
-            Nền tảng số 1 Việt Nam
+        {/* Gradient overlay tối đẹp hơn */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-blue-900/20"></div>
+        
+        {/* Nội dung chính giữa với animation */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pb-20 space-y-4">
+          <span className="inline-block bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg shadow-green-500/30 animate-fade-in">
+            ✨ Nền tảng số 1 Việt Nam
           </span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight drop-shadow-lg">
+          <h1 className="text-4xl md:text-7xl font-black text-white mb-2 leading-tight drop-shadow-2xl animate-fade-in">
             Tìm không gian sống <br />
-            <span className="text-blue-400">lý tưởng của bạn</span>
+            <span className="bg-gradient-to-r from-blue-300 via-blue-400 to-cyan-400 text-transparent bg-clip-text">lý tưởng của bạn</span>
           </h1>
-          <p className="text-gray-200 text-lg md:text-xl font-medium drop-shadow-md">
-            Hơn 50,000 phòng trọ, căn hộ, nhà nguyên căn đã được kiểm duyệt.
+          <p className="text-gray-100 text-lg md:text-xl font-medium drop-shadow-lg max-w-2xl animate-fade-in">
+            Hơn 50,000 phòng trọ, căn hộ, nhà nguyên căn đã được kiểm duyệt bởi cộng đồng.
           </p>
         </div>
       </div>

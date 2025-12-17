@@ -3,14 +3,21 @@ package com.chronosx.room_rental_be.infrastructure.security;
 import java.util.Arrays;
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> nhanh-cua-kiet
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+<<<<<<< HEAD
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+=======
+>>>>>>> nhanh-cua-kiet
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+<<<<<<< HEAD
 import com.chronosx.room_rental_be.infrastructure.service.impl.UserDetailsServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +40,14 @@ public class SecurityConfig {
     private final String[] AUTH_WHITELIST = {
         "/api/auth/**", "/h2-console/**", "/api/properties", "/api/properties/*",
     };
+=======
+import com.chronosx.room_rental_be.infrastructure.service.UserDetailsServiceImpl;
+
+@Configuration
+public class SecurityConfig {
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+>>>>>>> nhanh-cua-kiet
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -40,9 +56,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+<<<<<<< HEAD
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers(AUTH_WHITELIST)
+=======
+        http.csrf(csrf -> csrf.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "/h2-console/**")
+>>>>>>> nhanh-cua-kiet
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -51,7 +73,11 @@ public class SecurityConfig {
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         // For h2-console if needed
+<<<<<<< HEAD
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+=======
+        http.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
+>>>>>>> nhanh-cua-kiet
 
         http.cors(httpSecurityCorsConfigurer -> {
             CorsConfiguration corsConfiguration = new CorsConfiguration();

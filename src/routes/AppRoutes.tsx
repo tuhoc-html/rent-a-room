@@ -1,13 +1,17 @@
-import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
 
-import Layout1 from '../components/layouts/layout1';
-import AuthenLayout from '../components/layouts/authenlayout';
+import { Routes, Route, useLocation } from "react-router-dom";
 
-import HomePage from '../pages/home/homePage';
-import LoginPage from '../pages/login/loginpage';
-import RegisterPage from '../pages/register/registerpage';
-import ForgotPasswordPage from '../pages/forgot-password/forgotpasswordpage';
+import Layout1 from "../components/layouts/layout1";
+import AuthenLayout from "../components/layouts/authenlayout";
+
+import HomePage from "../pages/home/homePage";
+import LoginPage from "../pages/login/loginpage";
+import RegisterPage from "../pages/register/registerpage";
+import ForgotPasswordPage from "../pages/forgot-password/forgotpasswordpage";
+import DetailPage from "../pages/detail/DetailPage";
+import { PrivateRoute } from "./PrivateRoute";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import { AuthProvider } from "../context/AuthContext";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -16,22 +20,37 @@ const AppRoutes = () => {
 
   return (
     <>
-      {/* Routes chính (Nền) */}
       <Routes location={background || location}>
-        <Route element={<Layout1 />}>
+        <Route
+          element={
+            <AuthProvider>
+              <Layout1 />
+            </AuthProvider>
+          }
+        >
           <Route path="/" element={<HomePage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          {/* Thêm các route khác như Map, News ở đây */}
+
+          {/* THÊM ROUTE CHI TIẾT TẠI ĐÂY */}
+
+          <Route
+            path="/listings/:id"
+            element={
+              <PrivateRoute>
+                <DetailPage />
+              </PrivateRoute>
+            }
+          />
         </Route>
 
-        {/* Fallback: Nếu ép F5 tại trang login thì hiện layout thường */}
         <Route element={<AuthenLayout />}>
-           <Route path="/login" element={<LoginPage />} />
-           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Route>
+
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
 
-      {/* Routes Modal (Đè lên trên) */}
       {background && (
         <Routes>
           <Route element={<AuthenLayout isModal={true} />}>

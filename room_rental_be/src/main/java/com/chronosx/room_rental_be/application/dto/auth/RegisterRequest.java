@@ -30,5 +30,5 @@ public class RegisterRequest {
     private String phone;
 
     @NotNull
-    private String role; // ADMIN, LANDLORD, TENANT
+    private String role; // ADMIN, TENANT
 }

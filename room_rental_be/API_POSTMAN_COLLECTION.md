@@ -426,6 +426,282 @@ Authorization: Bearer {token}
 
 ---
 
+## 📄 Contract APIs
+
+### 15. Create Contract
+**POST** `/api/contracts`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Content-Type: application/json
+```
+
+**Body (JSON):**
+```json
+{
+  "propertyId": 1,
+  "tenantId": 2,
+  "startDate": "2025-01-01",
+  "endDate": "2025-12-31",
+  "depositAmount": 5000000,
+  "status": "ACTIVE"
+}
+```
+
+**Response:** 201 Created
+```json
+{
+  "id": 10,
+  "property": { "id": 1, "title": "Căn hộ đẹp tại Quận 1", "address": "123 Nguyễn Huệ", "price": 5000000 },
+  "tenant": { "id": 2, "username": "tenant1", "fullName": "Jane Smith", "phone": "0123", "email": "jane@example.com" },
+  "startDate": "2025-01-01",
+  "endDate": "2025-12-31",
+  "depositAmount": 5000000.00,
+  "status": "ACTIVE"
+}
+```
+
+### 16. List Contracts (optional filters)
+**GET** `/api/contracts`
+
+**Query params (tùy chọn):**
+- `tenantId`: lọc theo người thuê
+- `ownerId`: lọc theo chủ nhà
+- `status`: `ACTIVE|EXPIRED|TERMINATED`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+```
+
+**Response:** 200 OK
+```json
+[
+  {
+    "id": 10,
+    "property": { "id": 1, "title": "Căn hộ đẹp tại Quận 1", "address": "123 Nguyễn Huệ", "price": 5000000 },
+    "tenant": { "id": 2, "username": "tenant1", "fullName": "Jane Smith", "phone": "0123", "email": "jane@example.com" },
+    "startDate": "2025-01-01",
+    "endDate": "2025-12-31",
+    "depositAmount": 5000000.00,
+    "status": "ACTIVE"
+  }
+]
+```
+
+### 17. Get Contract By ID
+**GET** `/api/contracts/{id}`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+```
+
+**Response:** 200 OK (same structure như trên)
+
+### 18. Update Contract
+**PUT** `/api/contracts/{id}`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Content-Type: application/json
+```
+
+**Body (JSON):** (các field tùy chọn)
+```json
+{
+  "propertyId": 1,
+  "tenantId": 2,
+  "startDate": "2025-02-01",
+  "endDate": "2025-12-31",
+  "depositAmount": 6000000,
+  "status": "TERMINATED"
+}
+```
+
+**Response:** 200 OK (same structure)
+
+### 19. Delete Contract
+**DELETE** `/api/contracts/{id}`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+```
+
+**Response:** 204 No Content
+
+---
+
+## 🧾 Invoice APIs
+
+### 20. Create Invoice
+**POST** `/api/invoices`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Content-Type: application/json
+```
+
+**Body (JSON):**
+```json
+{
+  "contractId": 10,
+  "month": 1,
+  "year": 2025,
+  "electricityCost": 300000,
+  "waterCost": 150000,
+  "totalAmount": 3450000,
+  "status": "UNPAID"
+}
+```
+
+**Response:** 201 Created
+```json
+{
+  "id": 20,
+  "contractId": 10,
+  "month": 1,
+  "year": 2025,
+  "electricityCost": 300000.00,
+  "waterCost": 150000.00,
+  "totalAmount": 3450000.00,
+  "status": "UNPAID",
+  "property": { "id": 1, "title": "Căn hộ đẹp tại Quận 1", "address": "123 Nguyễn Huệ", "price": 5000000 },
+  "tenant": { "id": 2, "username": "tenant1", "fullName": "Jane Smith", "phone": "0123", "email": "jane@example.com" },
+  "payments": []
+}
+```
+
+### 21. List Invoices (optional filters)
+**GET** `/api/invoices`
+
+**Query params (tùy chọn):**
+- `contractId`
+- `tenantId`
+- `status`: `UNPAID|PAID`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+```
+
+**Response:** 200 OK (array cùng cấu trúc như trên)
+
+### 22. Get Invoice By ID
+**GET** `/api/invoices/{id}`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+```
+
+**Response:** 200 OK (cấu trúc như trên)
+
+### 23. Update Invoice
+**PUT** `/api/invoices/{id}`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Content-Type: application/json
+```
+
+**Body (JSON):** (các field tùy chọn)
+```json
+{
+  "contractId": 10,
+  "month": 2,
+  "year": 2025,
+  "electricityCost": 250000,
+  "waterCost": 120000,
+  "totalAmount": 3300000,
+  "status": "PAID"
+}
+```
+
+**Response:** 200 OK
+
+### 24. Delete Invoice
+**DELETE** `/api/invoices/{id}`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+```
+
+**Response:** 204 No Content
+
+---
+
+## 💳 Payment APIs
+
+### 25. Create Payment
+**POST** `/api/payments`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Content-Type: application/json
+```
+
+**Body (JSON):**
+```json
+{
+  "invoiceId": 20,
+  "paymentMethod": "BANK_TRANSFER",
+  "amount": 3450000,
+  "paymentDate": "2025-01-05T10:30:00"
+}
+```
+
+**Response:** 201 Created
+```json
+{
+  "id": 30,
+  "invoiceId": 20,
+  "paymentMethod": "BANK_TRANSFER",
+  "amount": 3450000.00,
+  "paymentDate": "2025-01-05T10:30:00"
+}
+```
+
+### 26. Get Payment By ID
+**GET** `/api/payments/{id}`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+```
+
+**Response:** 200 OK (cấu trúc như trên)
+
+### 27. List Payments By Invoice
+**GET** `/api/payments?invoiceId={invoiceId}`
+
+**Headers:**
+```
+Authorization: Bearer {token}
+```
+
+**Response:** 200 OK
+```json
+[
+  {
+    "id": 30,
+    "invoiceId": 20,
+    "paymentMethod": "BANK_TRANSFER",
+    "amount": 3450000.00,
+    "paymentDate": "2025-01-05T10:30:00"
+  }
+]
+```
+
+---
+
 ## 📋 Reference Data APIs
 
 ### 13. Get All Categories

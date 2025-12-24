@@ -118,7 +118,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         var bookings = bookingRepo.findAll().stream()
                 .filter(b -> b.getProperty().getOwner().getId().equals(owner.getId()))
-                .collect(Collectors.toList());
+                .toList();
         return bookings.stream().map(this::toResponse).collect(Collectors.toList());
     }
 

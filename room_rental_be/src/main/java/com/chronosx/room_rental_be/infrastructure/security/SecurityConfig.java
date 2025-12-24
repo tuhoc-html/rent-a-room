@@ -31,7 +31,7 @@ public class SecurityConfig {
 
     private final String[] AUTH_WHITELIST = {
         "/api/auth/**", "/h2-console/**", "/api/properties", "/api/properties/*",
-        "/api/categories", "api/districts",
+        "/api/categories", "/api/districts",
     };
 
     @Bean
